@@ -2,19 +2,19 @@ require('./config/config');
 
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 
 const app = express();
-
-const bodyParser = require('body-parser');
-
-app.use(require('./routes/usuario'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://localhost:27017/cafe', (err, res) => {
+app.use(require('./routes/usuario'));
+
+mongoose.set('useCreateIndex', true);
+mongoose.connect('mongodb://localhost:27017/cafe', {useNewUrlParser: true}, (err, res) => {
 
     if(err) throw err;
 
